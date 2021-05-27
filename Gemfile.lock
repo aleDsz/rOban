@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rOban (0.1.0)
+    oban (0.1.0)
       activerecord (~> 6.0)
       concurrent-ruby (~> 1.1)
       pg (~> 1.2)
@@ -120,7 +120,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  rOban!
+  oban!
   rake (~> 13.0)
   rspec (~> 3.0)
   rubocop (~> 1.7)
