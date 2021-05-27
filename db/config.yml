@@ -10,4 +10,5 @@ development: &default
 test:
   <<: *default
   database: roban_test
+  url: <%= ENV['DATABASE_URL'] %>
   adapter: postgresql

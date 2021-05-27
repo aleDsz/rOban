@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
 require 'oban'
+require 'erb'
 
 GEM_ROOT = File.expand_path '..', __dir__
 CONFIG_PATH = File.join(GEM_ROOT, 'db/config.yml')
-CONFIG = YAML.safe_load(File.open(CONFIG_PATH), aliases: true)
+CONFIG = YAML.safe_load(
+  ERB.new(File.read(CONFIG_PATH)).result,
+  aliases: true
+)
 
 ActiveRecord::Base.establish_connection(CONFIG['test'])
 

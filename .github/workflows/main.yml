@@ -1,16 +1,42 @@
 name: Ruby
 
-on: [push,pull_request]
+on: [push, pull_request]
 
 jobs:
-  build:
+  test:
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/roban_test
+
+    services:
+      db:
+        image: postgres:13.1
+        ports: ['5432:5432']
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.6.5
         bundler-cache: true
-    - name: Run the default task
-      run: bundle exec rake
+
+    - name: Install dependencies
+      run: bundle install
+
+    - name: Prepare database
+      run: bundle exec rake db:test:prepare
+
+    - name: Analyze code
+      run: bundle exec rake rubocop
+
+    - name: Run tests
+      run: bundle exec rspec
