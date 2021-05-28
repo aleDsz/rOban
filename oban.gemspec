@@ -30,8 +30,10 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'activerecord', '~> 6.0'
   spec.add_dependency 'concurrent-ruby', '~> 1.1'
   spec.add_dependency 'pg', '~> 1.2'
+  spec.add_dependency 'sorbet-runtime', '~> 0.5.6465'
 
   spec.add_development_dependency 'rubocop-rake', '~> 0.5'
   spec.add_development_dependency 'rubocop-rspec', '~> 2.3'
+  spec.add_development_dependency 'sorbet', '~> 0.5.6465'
   spec.add_development_dependency 'standalone_migrations', '~> 6.0'
 end
