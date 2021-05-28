@@ -6,7 +6,8 @@ require_relative 'oban/version'
 # Public: Oban main module
 module Oban
   PATHS = [
-    '/models/*.rb'
+    '/models/*.rb',
+    '/*.rb'
   ].freeze
 
   def self.start
