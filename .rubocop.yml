@@ -1,6 +1,11 @@
 AllCops:
   TargetRubyVersion: 2.5
   NewCops: enable
+  Exclude:
+    - 'vendor/**/*'
+    - 'spec/**/*'
+    - 'tmp/**/*'
+    - 'db/**/*.rb'
 
 Style/StringLiterals:
   Enabled: true
