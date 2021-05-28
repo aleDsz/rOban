@@ -53,7 +53,7 @@ CREATE TABLE public.oban_jobs (
     attempt_errors jsonb[] DEFAULT '{}'::jsonb[] NOT NULL,
     attempt integer DEFAULT 0 NOT NULL,
     max_attempts integer DEFAULT 20 NOT NULL,
-    scheduled_at timestamp without time zone NOT NULL,
+    scheduled_at timestamp without time zone DEFAULT now() NOT NULL,
     attempted_at timestamp without time zone,
     completed_at timestamp without time zone,
     attempted_by text[],

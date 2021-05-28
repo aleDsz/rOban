@@ -23,7 +23,7 @@ class CreateObanJobs < ActiveRecord::Migration[6.0]
       t.jsonb :attempt_errors, null: false, default: [], array: true
       t.integer :attempt, null: false, default: 0
       t.integer :max_attempts, null: false, default: 20
-      t.timestamp :scheduled_at, null: false, default: 'NOW()'
+      t.timestamp :scheduled_at, null: false, default: -> { 'NOW()' }
       t.timestamp :attempted_at
       t.timestamp :completed_at
       t.text :attempted_by, array: true
