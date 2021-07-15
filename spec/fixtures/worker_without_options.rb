@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-class WorkerWithoutOptions < Oban::Worker
-  def perform(_job)
-    puts 'Worker without options'
-    params
+class WorkerWithoutOptions
+  include Oban::Worker
+
+  def perform
+    args
   end
 end

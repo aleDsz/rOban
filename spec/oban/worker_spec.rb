@@ -3,23 +3,29 @@
 require 'spec_helper'
 
 RSpec.describe Oban::Worker, type: :worker do
+  let(:args) { { id: 123 } }
+
   context 'without options' do
-    it 'instantiates a custom worker' do
-      job = Job.new({ args: { id: 123 } })
-      worker = WorkerWithoutOptions.new(job)
+    let(:worker) { WorkerWithoutOptions }
 
-      expect(worker.is_a?(described_class)).to be true
-    end
+    context 'from custom worker' do
+      it 'inserts job with correctly fields' do
+        job = worker.perform_async(args)
+        expected_args = args.stringify_keys!
 
-    it 'performs the worker with created job' do
-      args = { id: 123 }
-      job = Oban::Job.create({ args: args })
-      worker = WorkerWithoutOptions.new(job)
+        expect(job.args).to eq(expected_args)
+        expect(job.worker).to eq('WorkerWithoutOptions')
+        expect(job.state).to eq('available')
+      end
 
-      result = worker.perform(job)
-      expected_result = args.stringify_keys!
+      it 'performs the worker with created job' do
+        job = worker.perform_async(args)
 
-      expect(result).to eq(expected_result)
+        result = worker.perform_job(job)
+        expected_result = args.stringify_keys!
+
+        expect(result).to eq(expected_result)
+      end
     end
   end
 end
