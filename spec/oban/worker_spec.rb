@@ -21,7 +21,7 @@ RSpec.describe Oban::Worker, type: :worker do
       it 'performs the worker with created job' do
         job = worker.perform_async(args)
 
-        result = worker.perform_job(job)
+        result = described_class.perform_job(job)
         expected_result = args.stringify_keys!
 
         expect(result).to eq(expected_result)

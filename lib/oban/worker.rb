@@ -109,6 +109,19 @@ module Oban
       base.extend(ClassMethods)
     end
 
+    def self.perform_job(job)
+      worker = job.worker
+      klass = job.worker.constantize.new
+
+      raise ArgumentError, "#{worker} doesn't implements the method perform" unless klass.methods.include?(:perform)
+
+      klass = job.worker.constantize.new
+      klass.job = job
+      klass.args = job.args
+
+      klass.perform
+    end
+
     # Public: Export functions to custom worker class
     module ClassMethods
       def perform_async(args, options = {})
@@ -119,16 +132,6 @@ module Oban
         }.merge(options)
 
         Job.create(params)
-      end
-
-      def perform_job(job)
-        raise ArgumentError, "#{worker} doesn't implements the method perform" unless method_defined?(:perform)
-
-        klass = job.worker.constantize.new
-        klass.job = job
-        klass.args = job.args
-
-        klass.perform
       end
     end
   end
