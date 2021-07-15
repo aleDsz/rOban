@@ -25,7 +25,7 @@ module Oban
           oban_worker_options || { queue: 'default' }
         end
 
-        def oban_class_attribute(*attrs)
+        def oban_class_attribute(*attrs) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
           instance_reader = true
           instance_writer = true
 
